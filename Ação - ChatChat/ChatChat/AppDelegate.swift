@@ -108,6 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func tokenRefreshNotification(_ notification: Notification) {
         if let refreshedToken = FIRInstanceID.instanceID().token() {
             print("InstanceID token: \(refreshedToken)")
+            // SAVE TOKEN ON USER TABLE
         }
         
         // Connect to FCM since connection may have failed when attempted before having a token.
@@ -146,6 +147,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("APNs token retrieved: \(deviceToken)")
         
         FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.unknown)
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.sandbox)
+        FIRInstanceID.instanceID().setAPNSToken(deviceToken, type: FIRInstanceIDAPNSTokenType.prod)
         print("Device Token:", deviceToken)
         
         // With swizzling disabled you must set the APNs token here.
@@ -156,9 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {
         connectToFcm()
     }
-    // [END connect_on_active]
     
-    // [START disconnect_from_fcm]
     func applicationDidEnterBackground(_ application: UIApplication) {
         FIRMessaging.messaging().disconnect()
         print("Disconnected from FCM.")

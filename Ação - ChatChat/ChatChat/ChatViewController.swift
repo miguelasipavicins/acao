@@ -25,8 +25,7 @@ import Firebase
 import Photos
 import JSQMessagesViewController
 
-
-class ChatViewController: JSQMessagesViewController{
+class ChatViewController: JSQMessagesViewController {
     
     var messages = [JSQMessage]()
     var chatIdentifier: String?
@@ -186,16 +185,16 @@ class ChatViewController: JSQMessagesViewController{
 
     private func loadChatsWithSelectedDepartment() {
         
-                FIRDatabase.database().reference().child("chat-messages").child(self.chatIdentifier!).observe(.childAdded, with: { (chatSnapshot) in
-                    let chatData = chatSnapshot.value as! Dictionary<String, AnyObject>
-                    
+        FIRDatabase.database().reference().child("chat-messages").child(self.chatIdentifier!).observe(.childAdded, with: { (chatSnapshot) in
+                let chatData = chatSnapshot.value as! Dictionary<String, AnyObject>
+            
                     if let text = chatData["text"] as? String, let id = chatData["senderId"] as? String, let name = chatData["senderEmail"] as? String {
                         self.addMessage(withId: id as! String, name: name, text: text)
                         self.finishReceivingMessage()
                         JSQSystemSoundPlayer.jsq_playMessageReceivedSound()
                     }
-                }
-                )
+            }
+        )
     }
     
     
@@ -221,9 +220,15 @@ class ChatViewController: JSQMessagesViewController{
         
         updateLatestMessageTimestamp(timeStamp: negativeCurrentTimeInMilli)
         incrementUnreadMessageCount()
-        
+        print(messageItem)
         JSQSystemSoundPlayer.jsq_playMessageSentSound() // 4
         finishSendingMessage() // 5
+        /**
+         https://fcm.googleapis.com/fcm/send
+
+         */
+        
+        // SEND PUSH NOTIFICATION ON GOOGLE.APIS.COM
         
     }
     
