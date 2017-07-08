@@ -18,6 +18,8 @@ class UsersListViewController: UITableViewController{
     private lazy var userRef: FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private var userRefHandle: FIRDatabaseHandle?
     
+    public var notificationsRef: [FirebaseRef] = []
+    
     //Logged user preferences
     var senderId: String!
     var loggedUserEmail: String!
@@ -28,10 +30,26 @@ class UsersListViewController: UITableViewController{
     override func viewDidLoad() {
         getLoggedUserPreferences()
         observeUsers()
+        
+        // If have Firebase Instance ID Token, retreive it and save on current user table
+        saveFCMToken()
+
+    }
+
+    private func saveFCMToken() {
+        if let refreshedToken = FIRInstanceID.instanceID().token() {
+            userRef.child(senderId).child("fcm_token").setValue(refreshedToken)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
+        
+        if notificationsRef.count >= 1 {
+            for index in 0...notificationsRef.count - 1 {
+                self.setNotification(forCell: notificationsRef[index].cell, atIndex: index)
+            }
+        }
     }
     deinit {
         if let refHandle = userRefHandle {
@@ -50,19 +68,60 @@ class UsersListViewController: UITableViewController{
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExistingUser") as! ChatTableViewCell
+        
         let departmentName = users[indexPath.row].name
+        
         cell.configureCell(title: departmentName!)
+
+        // Set notification if there is an notification index at Users's notification table
+        notificationsRef.append(setNotification(forCell: cell, atIndex: indexPath.row))
+        
         
         return cell
     }
     
+    private func setNotification(forCell cell: ChatTableViewCell, atIndex index: Int) -> FirebaseRef{
+        let notificationRef = userRef.child(self.senderId).child("notifications").observe(.value, with: { (snapshot) in
+            if let notificationList = snapshot.value as? [String: Int] {
+                if self.users[index].key == notificationList.first?.key {
+                    cell.notificationIcon.alpha = 1.0
+                }
+            }
+        })
+        
+        return FirebaseRef(cell: cell, key: cell.departmentName.text!, uid: notificationRef)
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[(indexPath as NSIndexPath).row]
+
+        let cellChat = tableView.cellForRow(at: indexPath) as? ChatTableViewCell
+
+        
+        if let cell = cellChat {
+            print(self.notificationsRef)
+            if cell.notificationIcon.alpha == 1.0 {
+                userRef.child(self.senderId).child("notifications").child(user.key).removeValue()
+                cell.notificationIcon.alpha = 0
+                
+                if let notifRefUId = getFirebaseRef(cell.departmentName.text!) {
+                    userRef.child(self.senderId).child("notifications").removeObserver(withHandle: notifRefUId)
+                }
+            }
+        }
+
         self.performSegue(withIdentifier: "ShowChat", sender: user)
     }
     
+    private func getFirebaseRef(_ text: String) -> UInt? {
+        for notifRef in self.notificationsRef {
+            if notifRef.key == text {
+                return notifRef.uid
+            }
+        }
+        return nil
+    }
 
-    
     // MARK: Firebase related methods
     private func observeUsers() {
         //Use the observe method to listen for new users being written to the Firebase DB
@@ -113,7 +172,8 @@ class UsersListViewController: UITableViewController{
         FIRDatabase.database().reference().child("users").child(self.senderId).observeSingleEvent(of: FIRDataEventType.value, with: { (snapshot) in
             let loggedUserPreferences = snapshot.value as! Dictionary<String, AnyObject>
             print(loggedUserPreferences)
-            if let loggedUserName = loggedUserPreferences["name"] as! String!, let loggedUserCompany = loggedUserPreferences["company"] as! String!, let loggedUserType = loggedUserPreferences["company"] as! String!{
+            if let loggedUserName = loggedUserPreferences["name"] as! String!,
+                let loggedUserCompany = loggedUserPreferences["company"] as! String!, let loggedUserType = loggedUserPreferences["company"] as! String!{
                 self.loggedUserName = loggedUserName
                 self.loggedUserCompany = loggedUserCompany
                 self.loggedUserType = loggedUserType
@@ -123,7 +183,4 @@ class UsersListViewController: UITableViewController{
             }
         })
     }
-    
-    
-    
 }

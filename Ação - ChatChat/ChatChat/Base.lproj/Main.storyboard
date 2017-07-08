@@ -151,15 +151,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingUser" rowHeight="124" id="v9O-Wb-fCA" customClass="ChatTableViewCell" customModule="ChatChat" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="28" width="375" height="124"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ExistingUser" rowHeight="134" id="v9O-Wb-fCA" customClass="ChatTableViewCell" customModule="ChatChat" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="28" width="375" height="134"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v9O-Wb-fCA" id="RA5-fY-2ih">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="124"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="134"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dhb-yw-XWf">
-                                            <rect key="frame" x="8" y="36" width="50" height="50"/>
+                                            <rect key="frame" x="8" y="42" width="50" height="50"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="50" id="AL8-Vt-j7i"/>
                                                 <constraint firstAttribute="height" constant="50" id="SwA-oQ-MAl"/>
@@ -175,6 +175,10 @@
                                             <rect key="frame" x="337" y="54" width="15" height="15"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_notification_red" translatesAutoresizingMaskIntoConstraints="NO" id="ey2-bx-6eC">
+                                            <rect key="frame" x="348" y="30" width="14" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        </imageView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="dhb-yw-XWf" firstAttribute="centerY" secondItem="RA5-fY-2ih" secondAttribute="centerY" id="12x-FK-vsl"/>
@@ -186,6 +190,7 @@
                                 <connections>
                                     <outlet property="departmentName" destination="smc-JE-XxW" id="Wbm-za-glc"/>
                                     <outlet property="iconImg" destination="dhb-yw-XWf" id="F5j-6o-jG7"/>
+                                    <outlet property="notificationIcon" destination="ey2-bx-6eC" id="Tn8-g8-je2"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -491,6 +496,7 @@
         <image name="Chat-50" width="25" height="25"/>
         <image name="News-50" width="25" height="25"/>
         <image name="acao_1" width="1181" height="551"/>
+        <image name="icon_notification_red" width="24" height="24"/>
         <image name="site" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>

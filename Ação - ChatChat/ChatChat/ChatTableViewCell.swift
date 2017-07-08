@@ -14,8 +14,13 @@ class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak var departmentName: UILabel!
     @IBOutlet weak var advanceIconImg: UIImageView!
     
+    public var cellDepartmentId: String?
+    
+    @IBOutlet weak var notificationIcon: UIImageView!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
+        print("awake")
         // Initialization code
     }
 

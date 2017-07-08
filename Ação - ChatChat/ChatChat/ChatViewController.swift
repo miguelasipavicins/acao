@@ -33,9 +33,10 @@ class ChatViewController: JSQMessagesViewController {
     lazy var outgoingBubbleImageView: JSQMessagesBubbleImage = self.setupOutgoingBubble()
     lazy var incomingBubbleImageView: JSQMessagesBubbleImage = self.setupIncomingBubble()
     
-    //private lazy var userChatsRef: FIRDatabaseReference = FIRDatabase.database().reference().child("user-chatContacts:chat")
+//    private lazy var userChatsRef: FIRDatabaseReference = FIRDatabase.database().reference().child("user-chatContacts:chat")
     private lazy var chatsRef: FIRDatabaseReference = FIRDatabase.database().reference().child("chat-messages")
     private var chatsRefHandle: FIRDatabaseHandle?
+    private lazy var usersRef = FIRDatabase.database().reference().child("users")
     
     //Identifica o canal com o qual será feito o Chat
     var departmentId: String!
@@ -68,11 +69,17 @@ class ChatViewController: JSQMessagesViewController {
         self.inputToolbar.contentView.leftBarButtonItem = nil
         
         checkForUserChatsWithDepartment()
+
+        usersRef.child(senderId).child("notifications").observe(.childAdded, with: { (snapshot) in
+            if snapshot.key == self.user?.key {
+                self.usersRef.child(self.senderId).child("notifications").child((self.user?.key)!).removeValue()
+            }
+        })
     }
     
     func handleCall(){
         //Adicionar função de ligar para o departamento
-        }
+    }
     
     // MARK: Collection view methods (Bubbles setup)
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, messageDataForItemAt indexPath: IndexPath!) -> JSQMessageData! {
@@ -223,13 +230,6 @@ class ChatViewController: JSQMessagesViewController {
         print(messageItem)
         JSQSystemSoundPlayer.jsq_playMessageSentSound() // 4
         finishSendingMessage() // 5
-        /**
-         https://fcm.googleapis.com/fcm/send
-
-         */
-        
-        // SEND PUSH NOTIFICATION ON GOOGLE.APIS.COM
-        
     }
     
     func updateLatestMessageTimestamp(timeStamp: Int64){

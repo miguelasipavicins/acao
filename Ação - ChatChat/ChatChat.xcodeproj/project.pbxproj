@@ -17,6 +17,7 @@
 		490FE09C1E3AB57C00A56292 /* NewsDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 490FE09B1E3AB57C00A56292 /* NewsDetailsViewController.swift */; };
 		49151E7C1E33E757006E6230 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 49151E7B1E33E757006E6230 /* GoogleService-Info.plist */; };
 		4937DF8A1E4A9117009545CA /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4937DF891E4A9117009545CA /* WebViewViewController.swift */; };
+		49397F911F0F07F100A0B48B /* FirebaseRef.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49397F901F0F07F100A0B48B /* FirebaseRef.swift */; };
 		49BE08F21E08A29A006CB6FB /* NewsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49BE08F11E08A29A006CB6FB /* NewsTableViewCell.swift */; };
 		BB53557A1BEF765800321277 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB5355791BEF765800321277 /* AppDelegate.swift */; };
 		BB53557C1BEF765800321277 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB53557B1BEF765800321277 /* LoginViewController.swift */; };
@@ -40,6 +41,7 @@
 		490FE09B1E3AB57C00A56292 /* NewsDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsDetailsViewController.swift; sourceTree = "<group>"; };
 		49151E7B1E33E757006E6230 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4937DF891E4A9117009545CA /* WebViewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		49397F901F0F07F100A0B48B /* FirebaseRef.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseRef.swift; sourceTree = "<group>"; };
 		49BE08F11E08A29A006CB6FB /* NewsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsTableViewCell.swift; sourceTree = "<group>"; };
 		5655C385B612583CE998B735 /* Pods-ChatChat.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatChat.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatChat/Pods-ChatChat.debug.xcconfig"; sourceTree = "<group>"; };
 		6A5115BE1CC0671DC502A4F4 /* Pods_ChatChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ChatChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -82,6 +84,7 @@
 			children = (
 				490ABB0B1DFE052600E38749 /* User.swift */,
 				490ABB121E00B52600E38749 /* News.swift */,
+				49397F901F0F07F100A0B48B /* FirebaseRef.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				4901C08E1E26E04A001E0B21 /* ChatTableViewCell.swift in Sources */,
 				490ABB0C1DFE052600E38749 /* User.swift in Sources */,
 				490ABB0E1DFE05D900E38749 /* UsersListViewController.swift in Sources */,
+				49397F911F0F07F100A0B48B /* FirebaseRef.swift in Sources */,
 				BB53557A1BEF765800321277 /* AppDelegate.swift in Sources */,
 				4937DF8A1E4A9117009545CA /* WebViewViewController.swift in Sources */,
 				490ABB111E00B4E400E38749 /* NewsViewController.swift in Sources */,

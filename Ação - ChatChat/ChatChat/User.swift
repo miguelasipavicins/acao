@@ -7,17 +7,17 @@
 //
 
 class User {
-    
+
     let email: String!
     let key: String!
     let name: String!
     let type: String!
-    
+
     init(email: String, key: String, name: String, type: String) {
         self.email = email
         self.key = key
         self.name = name
         self.type = type
     }
-    
+
 }
