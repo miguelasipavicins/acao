@@ -1,36 +1,30 @@
-//
-//  UsersListViewController.swift
-//  ChatChat
-//
-//  Created by Miguel Asipavicins on 11/12/16.
-//  Copyright © 2016 Razeware LLC. All rights reserved.
-//
-
 import Foundation
 import UIKit
 import Firebase
 
 class UsersListViewController: UITableViewController{
-    
+
     // MARK: Properties
     var senderDisplayName: String?
     var users: [User] = []
     private lazy var userRef: FIRDatabaseReference = FIRDatabase.database().reference().child("users")
     private var userRefHandle: FIRDatabaseHandle?
-    
+
     public var notificationsRef: [FirebaseRef] = []
     
+    public var cellRef: [String: ChatTableViewCell] = [:]
+
     //Logged user preferences
     var senderId: String!
     var loggedUserEmail: String!
     var loggedUserName: String!
     var loggedUserCompany: String!
     var loggedUserType: String!
-    
+
     override func viewDidLoad() {
         getLoggedUserPreferences()
         observeUsers()
-        
+
         // If have Firebase Instance ID Token, retreive it and save on current user table
         saveFCMToken()
 
@@ -41,19 +35,41 @@ class UsersListViewController: UITableViewController{
             userRef.child(senderId).child("fcm_token").setValue(refreshedToken)
         }
     }
-    
+
     override func viewDidAppear(_ animated: Bool) {
         self.tabBarController?.tabBar.isHidden = false
-        
-        if notificationsRef.count >= 1 {
-            for index in 0...notificationsRef.count - 1 {
-                self.setNotification(forCell: notificationsRef[index].cell, atIndex: index)
-            }
-        }
+
+        setNotificationObservers()
     }
     deinit {
         if let refHandle = userRefHandle {
             userRef.removeObserver(withHandle: refHandle)
+        }
+    }
+    
+    private func setNotificationObservers() {
+        let notifRef = userRef.child(self.senderId).child("notifications")
+        for user in users {
+            let userNotifRef = notifRef.child(user.key)
+            userNotifRef.removeAllObservers()
+            userNotifRef.observe(.value, with: { (snapshot) in
+                self.setCellNotification(forUser: user, snapshot)
+            })
+        }
+    }
+    
+    private func setCellNotification(forUser user: User, _ snapshot: FIRDataSnapshot, _ forCell: ChatTableViewCell? = nil) {
+        if let value = snapshot.value as? Int {
+            var cell = self.cellRef[user.key]
+            
+            if let cellParam = forCell {
+                cell = cellParam
+            }
+            cell?.notificationNumber.text = value.description
+            cell?.notificationNumber.alpha = 1.0
+            cell?.notificationIcon.alpha = 1.0
+            self.cellRef[user.key] = cell
+            
         }
     }
 
@@ -61,58 +77,47 @@ class UsersListViewController: UITableViewController{
     override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
+
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return users.count
     }
-    
+
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ExistingUser") as! ChatTableViewCell
+
+        let user = users[indexPath.row]
         
-        let departmentName = users[indexPath.row].name
+        
+        let departmentName = user.name
+
+        let notificationsRef = userRef.child(self.senderId).child("notifications")
         
         cell.configureCell(title: departmentName!)
 
         // Set notification if there is an notification index at Users's notification table
-        notificationsRef.append(setNotification(forCell: cell, atIndex: indexPath.row))
-        
-        
+        notificationsRef.child(user.key).observe(.value, with: { (snapshot) in
+            self.setCellNotification(forUser: user, snapshot, cell)
+        })
         return cell
     }
-    
-    private func setNotification(forCell cell: ChatTableViewCell, atIndex index: Int) -> FirebaseRef{
-        let notificationRef = userRef.child(self.senderId).child("notifications").observe(.value, with: { (snapshot) in
-            if let notificationList = snapshot.value as? [String: Int] {
-                if self.users[index].key == notificationList.first?.key {
-                    cell.notificationIcon.alpha = 1.0
-                }
-            }
-        })
-        
-        return FirebaseRef(cell: cell, key: cell.departmentName.text!, uid: notificationRef)
-    }
-    
+
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let user = users[(indexPath as NSIndexPath).row]
 
         let cellChat = tableView.cellForRow(at: indexPath) as? ChatTableViewCell
 
-        
+
         if let cell = cellChat {
-            print(self.notificationsRef)
             if cell.notificationIcon.alpha == 1.0 {
                 userRef.child(self.senderId).child("notifications").child(user.key).removeValue()
                 cell.notificationIcon.alpha = 0
-                
-                if let notifRefUId = getFirebaseRef(cell.departmentName.text!) {
-                    userRef.child(self.senderId).child("notifications").removeObserver(withHandle: notifRefUId)
-                }
+                cell.notificationNumber.alpha = 0
+                userRef.child(self.senderId).child("notifications").child(user.key).removeAllObservers()
             }
         }
-
         self.performSegue(withIdentifier: "ShowChat", sender: user)
     }
-    
+
     private func getFirebaseRef(_ text: String) -> UInt? {
         for notifRef in self.notificationsRef {
             if notifRef.key == text {
@@ -135,7 +140,7 @@ class UsersListViewController: UITableViewController{
             }
         })
     }
-    
+
     // MARK: Navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         super.prepare(for: segue, sender: sender)
@@ -151,21 +156,19 @@ class UsersListViewController: UITableViewController{
             chatVc.loggedUserCompany = self.loggedUserCompany
             self.tabBarController?.tabBar.isHidden = true
         }
-        
     }
-    
-    
+
     //MARK: Volta para a tela de login
     @IBAction func signoutButtonPressed(_ sender: Any) {
-        
+
         do {
             try FIRAuth.auth()!.signOut()
             dismiss(animated: true, completion: nil)
         } catch {
-            
+
         }
     }
-    
+
     func getLoggedUserPreferences(){
         self.senderId = FIRAuth.auth()?.currentUser?.uid
         self.loggedUserEmail = FIRAuth.auth()?.currentUser?.email

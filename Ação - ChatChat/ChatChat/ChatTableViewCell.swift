@@ -10,6 +10,7 @@ import UIKit
 
 class ChatTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var notificationNumber: UILabel!
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var departmentName: UILabel!
     @IBOutlet weak var advanceIconImg: UIImageView!

@@ -69,12 +69,17 @@ class ChatViewController: JSQMessagesViewController {
         self.inputToolbar.contentView.leftBarButtonItem = nil
         
         checkForUserChatsWithDepartment()
-
-        usersRef.child(senderId).child("notifications").observe(.childAdded, with: { (snapshot) in
-            if snapshot.key == self.user?.key {
-                self.usersRef.child(self.senderId).child("notifications").child((self.user?.key)!).removeValue()
-            }
-        })
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        // Removes the Firebase Notification array for the current chat and user
+        removeChatNotification()
+    }
+    
+    private func removeChatNotification() {
+        usersRef.child(senderId).child("notifications").child((user?.key)!).removeValue()
     }
     
     func handleCall(){

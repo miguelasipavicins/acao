@@ -176,9 +176,16 @@
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
                                         <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="icon_notification_red" translatesAutoresizingMaskIntoConstraints="NO" id="ey2-bx-6eC">
-                                            <rect key="frame" x="348" y="30" width="14" height="14"/>
+                                            <rect key="frame" x="296" y="52" width="20" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="99" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EAh-Lc-0Qs">
+                                            <rect key="frame" x="299" y="55" width="15" height="13"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="dhb-yw-XWf" firstAttribute="centerY" secondItem="RA5-fY-2ih" secondAttribute="centerY" id="12x-FK-vsl"/>
@@ -191,6 +198,7 @@
                                     <outlet property="departmentName" destination="smc-JE-XxW" id="Wbm-za-glc"/>
                                     <outlet property="iconImg" destination="dhb-yw-XWf" id="F5j-6o-jG7"/>
                                     <outlet property="notificationIcon" destination="ey2-bx-6eC" id="Tn8-g8-je2"/>
+                                    <outlet property="notificationNumber" destination="EAh-Lc-0Qs" id="5iX-S6-BMs"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
