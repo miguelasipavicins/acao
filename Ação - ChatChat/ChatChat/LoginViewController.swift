@@ -43,7 +43,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         }
         
         //MARK: LoginButton style configuration
-        loginButton.layer.cornerRadius = 5
+        loginButton.layer.cornerRadius = 2
         //loginButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25)
         loginButton.layer.shadowOpacity = 0.25
         loginButton.layer.shadowOffset = CGSize(width: 0, height: 3)
@@ -54,27 +54,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
-    
-    //MARK: Usuário já existente
+    //MARK: Performs the login for an existing user
     @IBAction func loginTapped(_ sender: Any) {
         if let email = self.emailField.text, let password = self.passwordField.text {
             FIRAuth.auth()?.signIn(withEmail: email, password: password, completion: { (user, error) in
                 if error == nil {
                     print("Login realizado com sucesso")
-                    
                     self.performSegue(withIdentifier: "LoggedIn", sender: nil)
                 }else{
                     print("Login falhou")
-                    
                     let alert = UIAlertController(title: "Ops, algo está errado!", message: "Verifique se email e senha foram digitados corretamente", preferredStyle: UIAlertControllerStyle.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertActionStyle.default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
-
                 }
             })
-            
         }
-    
     }
     
     @IBAction func didTapCreate(_ sender: Any) {
@@ -92,5 +86,11 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         
     }
     
+    //MARK: For non clients, go to Ação webpage with browser
+    @IBAction func didNonCustomerButtonPress(_ sender: Any) {
+        
+        UIApplication.shared.openURL(URL(string: "https://acaocontabilidadejoinville.com.br/orcamento-online/")!)
+        
+    }
 }
 

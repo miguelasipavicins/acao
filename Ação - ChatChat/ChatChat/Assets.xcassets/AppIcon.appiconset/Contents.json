@@ -109,6 +109,12 @@
       "scale" : "2x"
     },
     {
+      "size" : "1024x1024",
+      "idiom" : "ios-marketing",
+      "filename" : "appicon1024appstore.jpg",
+      "scale" : "1x"
+    },
+    {
       "idiom" : "car",
       "size" : "60x60",
       "scale" : "2x"
@@ -171,6 +177,11 @@
       "scale" : "2x",
       "role" : "quickLook",
       "subtype" : "42mm"
+    },
+    {
+      "idiom" : "watch-marketing",
+      "size" : "1024x1024",
+      "scale" : "1x"
     }
   ],
   "info" : {
