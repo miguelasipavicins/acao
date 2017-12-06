@@ -1,0 +1,269 @@
+### Swift dependencies file v0 ###
+provides-top-level:
+- "NewsDetailsViewController"
+provides-nominal:
+- "04ChatA025NewsDetailsViewControllerC"
+provides-member:
+- ["04ChatA025NewsDetailsViewControllerC", ""]
+provides-dynamic-lookup:
+- "configureView"
+- "newsText"
+- "newsTitle"
+- "textLbl"
+- "titleLbl"
+- "viewDidLoad"
+depends-top-level:
+- "AssignmentPrecedence"
+- "NewsDetailsViewController"
+- "String"
+- "UILabel"
+- "UIViewController"
+depends-member:
+- !private ["So15CALayerDelegateP", "text"]
+- !private ["s7CVarArgP", "configureView"]
+- !private ["s7CVarArgP", "init"]
+- !private ["s7CVarArgP", "newsText"]
+- !private ["s7CVarArgP", "newsTitle"]
+- !private ["s7CVarArgP", "text"]
+- !private ["s7CVarArgP", "textLbl"]
+- !private ["s7CVarArgP", "titleLbl"]
+- !private ["s7CVarArgP", "viewDidLoad"]
+- ["s7CVarArgP", ""]
+- !private ["s28CustomDebugStringConvertibleP", "configureView"]
+- !private ["s28CustomDebugStringConvertibleP", "init"]
+- !private ["s28CustomDebugStringConvertibleP", "newsText"]
+- !private ["s28CustomDebugStringConvertibleP", "newsTitle"]
+- !private ["s28CustomDebugStringConvertibleP", "text"]
+- !private ["s28CustomDebugStringConvertibleP", "textLbl"]
+- !private ["s28CustomDebugStringConvertibleP", "titleLbl"]
+- !private ["s28CustomDebugStringConvertibleP", "viewDidLoad"]
+- ["s28CustomDebugStringConvertibleP", ""]
+- !private ["s23CustomStringConvertibleP", "configureView"]
+- !private ["s23CustomStringConvertibleP", "init"]
+- !private ["s23CustomStringConvertibleP", "newsText"]
+- !private ["s23CustomStringConvertibleP", "newsTitle"]
+- !private ["s23CustomStringConvertibleP", "text"]
+- !private ["s23CustomStringConvertibleP", "textLbl"]
+- !private ["s23CustomStringConvertibleP", "titleLbl"]
+- !private ["s23CustomStringConvertibleP", "viewDidLoad"]
+- ["s23CustomStringConvertibleP", ""]
+- !private ["s9EquatableP", "configureView"]
+- !private ["s9EquatableP", "init"]
+- !private ["s9EquatableP", "newsText"]
+- !private ["s9EquatableP", "newsTitle"]
+- !private ["s9EquatableP", "text"]
+- !private ["s9EquatableP", "textLbl"]
+- !private ["s9EquatableP", "titleLbl"]
+- !private ["s9EquatableP", "viewDidLoad"]
+- ["s9EquatableP", ""]
+- !private ["s8HashableP", "configureView"]
+- !private ["s8HashableP", "init"]
+- !private ["s8HashableP", "newsText"]
+- !private ["s8HashableP", "newsTitle"]
+- !private ["s8HashableP", "text"]
+- !private ["s8HashableP", "textLbl"]
+- !private ["s8HashableP", "titleLbl"]
+- !private ["s8HashableP", "viewDidLoad"]
+- ["s8HashableP", ""]
+- !private ["So8NSCodingP", "configureView"]
+- !private ["So8NSCodingP", "init"]
+- !private ["So8NSCodingP", "newsText"]
+- !private ["So8NSCodingP", "newsTitle"]
+- !private ["So8NSCodingP", "text"]
+- !private ["So8NSCodingP", "textLbl"]
+- !private ["So8NSCodingP", "titleLbl"]
+- !private ["So8NSCodingP", "viewDidLoad"]
+- ["So8NSCodingP", ""]
+- !private ["So26NSExtensionRequestHandlingP", "configureView"]
+- !private ["So26NSExtensionRequestHandlingP", "init"]
+- !private ["So26NSExtensionRequestHandlingP", "newsText"]
+- !private ["So26NSExtensionRequestHandlingP", "newsTitle"]
+- !private ["So26NSExtensionRequestHandlingP", "textLbl"]
+- !private ["So26NSExtensionRequestHandlingP", "titleLbl"]
+- !private ["So26NSExtensionRequestHandlingP", "viewDidLoad"]
+- ["So26NSExtensionRequestHandlingP", ""]
+- ["So8NSObjectC", "String"]
+- ["So8NSObjectC", "UILabel"]
+- ["So8NSObjectC", "configureView"]
+- ["So8NSObjectC", "init"]
+- ["So8NSObjectC", "newsText"]
+- ["So8NSObjectC", "newsTitle"]
+- !private ["So8NSObjectC", "text"]
+- ["So8NSObjectC", "textLbl"]
+- ["So8NSObjectC", "titleLbl"]
+- ["So8NSObjectC", "viewDidLoad"]
+- !private ["So16NSObjectProtocolP", "configureView"]
+- !private ["So16NSObjectProtocolP", "init"]
+- !private ["So16NSObjectProtocolP", "newsText"]
+- !private ["So16NSObjectProtocolP", "newsTitle"]
+- !private ["So16NSObjectProtocolP", "text"]
+- !private ["So16NSObjectProtocolP", "textLbl"]
+- !private ["So16NSObjectProtocolP", "titleLbl"]
+- !private ["So16NSObjectProtocolP", "viewDidLoad"]
+- ["So16NSObjectProtocolP", ""]
+- ["04ChatA025NewsDetailsViewControllerC", "String"]
+- ["04ChatA025NewsDetailsViewControllerC", "UILabel"]
+- ["04ChatA025NewsDetailsViewControllerC", "configureView"]
+- ["04ChatA025NewsDetailsViewControllerC", "deinit"]
+- ["04ChatA025NewsDetailsViewControllerC", "init"]
+- ["04ChatA025NewsDetailsViewControllerC", "newsText"]
+- ["04ChatA025NewsDetailsViewControllerC", "newsTitle"]
+- ["04ChatA025NewsDetailsViewControllerC", "textLbl"]
+- ["04ChatA025NewsDetailsViewControllerC", "titleLbl"]
+- ["04ChatA025NewsDetailsViewControllerC", "viewDidLoad"]
+- !private ["So29UIAccessibilityIdentificationP", "text"]
+- !private ["So12UIAppearanceP", "text"]
+- !private ["So21UIAppearanceContainerP", "configureView"]
+- !private ["So21UIAppearanceContainerP", "init"]
+- !private ["So21UIAppearanceContainerP", "newsText"]
+- !private ["So21UIAppearanceContainerP", "newsTitle"]
+- !private ["So21UIAppearanceContainerP", "text"]
+- !private ["So21UIAppearanceContainerP", "textLbl"]
+- !private ["So21UIAppearanceContainerP", "titleLbl"]
+- !private ["So21UIAppearanceContainerP", "viewDidLoad"]
+- ["So21UIAppearanceContainerP", ""]
+- !private ["So18UIContentContainerP", "configureView"]
+- !private ["So18UIContentContainerP", "init"]
+- !private ["So18UIContentContainerP", "newsText"]
+- !private ["So18UIContentContainerP", "newsTitle"]
+- !private ["So18UIContentContainerP", "textLbl"]
+- !private ["So18UIContentContainerP", "titleLbl"]
+- !private ["So18UIContentContainerP", "viewDidLoad"]
+- ["So18UIContentContainerP", ""]
+- !private ["So30UIContentSizeCategoryAdjustingP", "text"]
+- !private ["So17UICoordinateSpaceP", "text"]
+- !private ["So13UIDynamicItemP", "text"]
+- !private ["So18UIFocusEnvironmentP", "configureView"]
+- !private ["So18UIFocusEnvironmentP", "init"]
+- !private ["So18UIFocusEnvironmentP", "newsText"]
+- !private ["So18UIFocusEnvironmentP", "newsTitle"]
+- !private ["So18UIFocusEnvironmentP", "text"]
+- !private ["So18UIFocusEnvironmentP", "textLbl"]
+- !private ["So18UIFocusEnvironmentP", "titleLbl"]
+- !private ["So18UIFocusEnvironmentP", "viewDidLoad"]
+- ["So18UIFocusEnvironmentP", ""]
+- !private ["So11UIFocusItemP", "text"]
+- !private ["So7UILabelC", "text"]
+- !private ["So30UIPasteConfigurationSupportingP", "configureView"]
+- !private ["So30UIPasteConfigurationSupportingP", "init"]
+- !private ["So30UIPasteConfigurationSupportingP", "newsText"]
+- !private ["So30UIPasteConfigurationSupportingP", "newsTitle"]
+- !private ["So30UIPasteConfigurationSupportingP", "text"]
+- !private ["So30UIPasteConfigurationSupportingP", "textLbl"]
+- !private ["So30UIPasteConfigurationSupportingP", "titleLbl"]
+- !private ["So30UIPasteConfigurationSupportingP", "viewDidLoad"]
+- ["So30UIPasteConfigurationSupportingP", ""]
+- ["So11UIResponderC", "String"]
+- ["So11UIResponderC", "UILabel"]
+- ["So11UIResponderC", "configureView"]
+- ["So11UIResponderC", "init"]
+- ["So11UIResponderC", "newsText"]
+- ["So11UIResponderC", "newsTitle"]
+- !private ["So11UIResponderC", "text"]
+- ["So11UIResponderC", "textLbl"]
+- ["So11UIResponderC", "titleLbl"]
+- ["So11UIResponderC", "viewDidLoad"]
+- !private ["So30UIResponderStandardEditActionsP", "configureView"]
+- !private ["So30UIResponderStandardEditActionsP", "init"]
+- !private ["So30UIResponderStandardEditActionsP", "newsText"]
+- !private ["So30UIResponderStandardEditActionsP", "newsTitle"]
+- !private ["So30UIResponderStandardEditActionsP", "text"]
+- !private ["So30UIResponderStandardEditActionsP", "textLbl"]
+- !private ["So30UIResponderStandardEditActionsP", "titleLbl"]
+- !private ["So30UIResponderStandardEditActionsP", "viewDidLoad"]
+- ["So30UIResponderStandardEditActionsP", ""]
+- !private ["So16UIStateRestoringP", "configureView"]
+- !private ["So16UIStateRestoringP", "init"]
+- !private ["So16UIStateRestoringP", "newsText"]
+- !private ["So16UIStateRestoringP", "newsTitle"]
+- !private ["So16UIStateRestoringP", "textLbl"]
+- !private ["So16UIStateRestoringP", "titleLbl"]
+- !private ["So16UIStateRestoringP", "viewDidLoad"]
+- ["So16UIStateRestoringP", ""]
+- !private ["So18UITraitEnvironmentP", "configureView"]
+- !private ["So18UITraitEnvironmentP", "init"]
+- !private ["So18UITraitEnvironmentP", "newsText"]
+- !private ["So18UITraitEnvironmentP", "newsTitle"]
+- !private ["So18UITraitEnvironmentP", "text"]
+- !private ["So18UITraitEnvironmentP", "textLbl"]
+- !private ["So18UITraitEnvironmentP", "titleLbl"]
+- !private ["So18UITraitEnvironmentP", "viewDidLoad"]
+- ["So18UITraitEnvironmentP", ""]
+- !private ["So6UIViewC", "text"]
+- ["So16UIViewControllerC", "String"]
+- ["So16UIViewControllerC", "UILabel"]
+- ["So16UIViewControllerC", "configureView"]
+- ["So16UIViewControllerC", "init"]
+- ["So16UIViewControllerC", "newsText"]
+- ["So16UIViewControllerC", "newsTitle"]
+- ["So16UIViewControllerC", "textLbl"]
+- ["So16UIViewControllerC", "titleLbl"]
+- ["So16UIViewControllerC", "viewDidLoad"]
+- ["So16UIViewControllerC", ""]
+- !private ["s37_DefaultCustomPlaygroundQuickLookableP", "text"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "configureView"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "init"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "newsText"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "newsTitle"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "text"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "textLbl"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "titleLbl"]
+- !private ["10Foundation27_KeyValueCodingAndObservingP", "viewDidLoad"]
+- ["10Foundation27_KeyValueCodingAndObservingP", ""]
+depends-nominal:
+- !private "So15CALayerDelegateP"
+- "s7CVarArgP"
+- "s28CustomDebugStringConvertibleP"
+- "s23CustomStringConvertibleP"
+- "s9EquatableP"
+- "s8HashableP"
+- "So8NSCodingP"
+- "So26NSExtensionRequestHandlingP"
+- "So8NSObjectC"
+- "So16NSObjectProtocolP"
+- "04ChatA025NewsDetailsViewControllerC"
+- !private "So29UIAccessibilityIdentificationP"
+- !private "So12UIAppearanceP"
+- "So21UIAppearanceContainerP"
+- "So18UIContentContainerP"
+- !private "So30UIContentSizeCategoryAdjustingP"
+- !private "So17UICoordinateSpaceP"
+- !private "So13UIDynamicItemP"
+- "So18UIFocusEnvironmentP"
+- !private "So11UIFocusItemP"
+- !private "So7UILabelC"
+- "So30UIPasteConfigurationSupportingP"
+- "So11UIResponderC"
+- "So30UIResponderStandardEditActionsP"
+- "So16UIStateRestoringP"
+- "So18UITraitEnvironmentP"
+- !private "So6UIViewC"
+- "So16UIViewControllerC"
+- !private "s37_DefaultCustomPlaygroundQuickLookableP"
+- "10Foundation27_KeyValueCodingAndObservingP"
+depends-dynamic-lookup:
+depends-external:
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Dispatch.apinotesc"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/ObjectiveC.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreMedia.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/simd.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreImage.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/QuartzCore.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Dispatch.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Metal.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Darwin.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreLocation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Foundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/AVFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreFoundation.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreAudio.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/CoreGraphics.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Photos.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/Swift.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/UIKit.swiftmodule"
+- "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/iphoneos/armv7/SwiftOnoneSupport.swiftmodule"
+- "/Users/user/projects/acao/Ac\u0327a\u0303o - ChatChat/ChatChat/ChatChat-Bridging-Header.h"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/AVFoundation.framework/Headers/AVFoundation.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/Photos.framework/Headers/Photos.apinotes"
+- "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.1.sdk/System/Library/Frameworks/AudioToolbox.framework/Headers/AudioToolbox.apinotes"
+interface-hash: "1da0f72a8da1017be6697573ff7205a5"

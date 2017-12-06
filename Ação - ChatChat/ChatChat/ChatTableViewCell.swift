@@ -14,6 +14,7 @@ class ChatTableViewCell: UITableViewCell {
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var departmentName: UILabel!
     @IBOutlet weak var advanceIconImg: UIImageView!
+    @IBOutlet weak var departmentAvailability: UILabel!
     
     public var cellDepartmentId: String?
     
@@ -31,7 +32,7 @@ class ChatTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    func configureCell(title: String){
+    func configureCell(title: String, deptAvailability: String){
         
         self.departmentName.text = title
         
@@ -46,6 +47,8 @@ class ChatTableViewCell: UITableViewCell {
         }else{
             print("Existe algum departamento a mais que departamento")
         }
+        
+        self.departmentAvailability.text = deptAvailability
     }
     
 }
