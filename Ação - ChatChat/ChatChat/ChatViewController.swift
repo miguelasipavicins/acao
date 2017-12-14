@@ -26,7 +26,7 @@ import Photos
 import JSQMessagesViewController
 import MobileCoreServices
 
-class ChatViewController: JSQMessagesViewController {
+class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate {
     
     var messages = [JSQMessage]()
     var chatIdentifier: String?
@@ -38,10 +38,9 @@ class ChatViewController: JSQMessagesViewController {
     lazy var storageRef: FIRStorageReference = FIRStorage.storage().reference(forURL: "gs://acao-f519d.appspot.com")
     private let imageURLNotSetKey = "NOTSET"
     private var photoMessageMap = [String: JSQPhotoMediaItem]()
-    private var PDFMessageMap = [String: JSQMediaItem]()
+    private var PDFMessageMap = [String: JSQLocationMediaItem]()
     private var updatedMessageRefHandle: FIRDatabaseHandle?
-    
-    
+    private var pdfMessageRef: [Int: String] = [Int: String]()
     private lazy var chatsRef: FIRDatabaseReference = FIRDatabase.database().reference().child("chat-messages")
     private var chatsRefHandle: FIRDatabaseHandle?
     private lazy var usersRef = FIRDatabase.database().reference().child("users")
@@ -160,7 +159,16 @@ class ChatViewController: JSQMessagesViewController {
 
         cell.textView?.linkTextAttributes = attributes
         
+//        if let media = message.media {
+////            cell.addGestureRecognizer(UIGestureRecognizer(target: self, action: #selector(openMedia(media: media))))
+//            cell.
+//            media.mediaPlaceholderView()
+//        }
         return cell
+    }
+    
+    func openMedia(media: JSQMessageMediaData) {
+        
     }
 
     override func collectionView(_ collectionView: JSQMessagesCollectionView!, attributedTextForCellTopLabelAt indexPath: IndexPath!) -> NSAttributedString! {
@@ -281,8 +289,9 @@ class ChatViewController: JSQMessagesViewController {
     
 
     private func loadChatsWithSelectedDepartment() {
-
+        var counter = 0
         FIRDatabase.database().reference().child("chat-messages").child(self.chatIdentifier!).observe(.childAdded, with: { (chatSnapshot) in
+                counter += 1
                 let chatData = chatSnapshot.value as! Dictionary<String, AnyObject>
             
                     if let text = chatData["text"] as? String, let id = chatData["senderId"] as? String, let name = chatData["senderEmail"] as? String {
@@ -310,13 +319,17 @@ class ChatViewController: JSQMessagesViewController {
                             }
                         }
                     
-                        if let pdfURL = chatData["PDFUrl"] as? String {
-                            if let mediaItem = JSQMediaItem(maskAsOutgoing: id == self.senderId) {
+                        if let pdfURL = chatData["PDF"] as? String {
+                            if let mediaItem = JSQLocationMediaItem(maskAsOutgoing: id == self.senderId) {
                                 self.addPDFMessage(withId: id, key: chatSnapshot.key, mediaItem: mediaItem)
                                 
-                                if pdfURL.hasPrefix("gs://") {
-                                    self.setPDFDownloadable(pdfURL, forMediaItem: mediaItem, clearsPDFMessageMapOnSuccessForKey: nil)
+                                if pdfURL.hasPrefix("documents/") {
+                                    
+//                                    self.setPDFDownloadable(pdfURL, forMediaItem: mediaItem, clearsPDFMessageMapOnSuccessForKey: nil)
                                 }
+                                
+                                self.pdfMessageRef[counter] = chatSnapshot.key
+                                self.view.addSubview(mediaItem.mediaPlaceholderView())
                             }
                         }
                         self.finishReceivingMessage()
@@ -338,10 +351,43 @@ class ChatViewController: JSQMessagesViewController {
                         self.fetchImageDataAtURL(photoURL, forMediaItem: mediaItem, clearsPhotoMessageMapOnSuccessForKey: key) // 4
                     }
                 }
+                
+                if let PDFUrl = messageData["PDF"] as? String { // 2
+                    // The photo has been updated.
+                    if let mediaItem = self.PDFMessageMap[key] { // 3
+                        self.setPDFDownloadable(PDFUrl, forMediaItem: mediaItem, clearsPDFMessageMapOnSuccessForKey: key)
+                    }
+                }
             }
         })
     }
     
+    override func collectionView(_ collectionView: JSQMessagesCollectionView!, didTapMessageBubbleAt indexPath: IndexPath!) {
+        
+        if let jsqCell = collectionView.cellForItem(at: indexPath) as? JSQMessagesCollectionViewCell {
+            if let pdfURL = self.pdfMessageRef[indexPath.row + 1] {
+                let messageRef = self.chatsRef.child(self.chatIdentifier!).child(pdfURL).child("PDF").observe(.value, with: { (snapshot) in
+                    if let pdfRef = snapshot.value as? String {
+                        self.storageRef.child(pdfRef).downloadURL(completion: { (url, error) in
+                            if let error = error {
+                                NSLog(error.localizedDescription)
+                                return
+                            }
+                            self.setPDFDownloadable((url?.absoluteString)!)
+                            NSLog((url?.absoluteString)!)
+                        })
+                    }
+                })
+//                let rawPath = pdfURL.split(separator: "doc")
+                
+//                write(toFile: self.getDocumentsDirectory(), completion: { (url, error) in
+//                    if let error = error {
+//                        NSLog(error.localizedDescription)
+//                    }
+//                })
+            }
+        }
+    }
     
     // MARK: Envio de mensagens
     override func didPressSend(_ button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: Date!) {
@@ -450,14 +496,48 @@ class ChatViewController: JSQMessagesViewController {
             return
         }
         
-        let storageRef = FIRStorage.storage().reference(forURL: pdfURL)
+        let storageRef = FIRStorage.storage().reference(withPath: pdfURL)//reference(forURL: pdfURL)
         
         let localURL = getDocumentsDirectory()
+        
         
         
         let downloadTask = storageRef.write(toFile: localURL) { url, error in
             if let error = error {
                 NSLog("Error downloading file")
+                return
+            }
+
+            if let url = url {
+                if #available(iOS 10.0, *) {
+                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                } else {
+                    // Fallback on earlier versions
+                }
+            }
+        }
+    }
+    
+    private func setPDFDownloadable(_ pdfURL: String) {
+        if pdfURL == "NOTSET" {
+            return
+        }
+        
+        if #available(iOS 10.0, *) {
+            UIApplication.shared.open(URL(string: pdfURL)!, options: [:], completionHandler: nil)
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        let storageRef = FIRStorage.storage().reference(withPath: pdfURL)//reference(forURL: pdfURL)
+        
+        let localURL = getDocumentsDirectory()
+        
+        
+        
+        storageRef.write(toFile: localURL) { url, error in
+            if let error = error {
+                NSLog("Error downloading file: \(error.localizedDescription)")
                 return
             }
             
@@ -534,14 +614,14 @@ class ChatViewController: JSQMessagesViewController {
             collectionView.reloadData()
         }
     }
-    
-    private func addPDFMessage(withId id: String, key: String, mediaItem: JSQMediaItem) {
+
+    private func addPDFMessage(withId id: String, key: String, mediaItem: JSQLocationMediaItem) {
         if let message = JSQMessage(senderId: id, displayName: "", media: mediaItem) {
             messages.append(message)
             
-//            if (mediaItem.mediaView() == nil) {
-//                PDFMessageMap[key] = mediaItem
-//            }
+            if (mediaItem.mediaView() == nil) {
+                PDFMessageMap[key] = mediaItem
+            }
             
             collectionView.reloadData()
         }
@@ -632,11 +712,12 @@ extension ChatViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
     func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentAt url: URL) {
         // Create a reference to the file you want to upload
         uploadDocument(with: url)
+        controller.dismiss(animated: true, completion: nil)
     }
     
     func setDocumentFirebaseURL(_ url: String, forFireBaseURL key: String) {
         let itemRef = self.chatsRef.child(self.chatIdentifier!).child(key)
-        itemRef.updateChildValues(["PDFUrl": url])
+        itemRef.updateChildValues(["PDF": url])
     }
     
     func sendPDFMessage() -> String? {
@@ -644,7 +725,7 @@ extension ChatViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
         let currentTimeInMilli = Int64(NSDate().timeIntervalSince1970 * 1000)
         
         let messageItem = [
-            "PDFUrl": "NOTSET",
+            "PDF": "NOTSET",
             "senderId": senderId!,
             "senderEmail": self.loggedUserEmail!,
             "timestamp": currentTimeInMilli
@@ -669,8 +750,8 @@ extension ChatViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
                         return
                     }
                         // Metadata contains file metadata such as size, content-type, and download URL.
-                    if let downloadURL = metadata!.downloadURL() {
-                        self.setDocumentFirebaseURL(downloadURL.description, forFireBaseURL: messageURL.description)
+                    if let metadata = metadata, let path = metadata.path {
+                        self.setDocumentFirebaseURL(path, forFireBaseURL: messageURL.description)
                     }
                 }
             }
