@@ -25,6 +25,7 @@ import Firebase
 import Photos
 import JSQMessagesViewController
 import MobileCoreServices
+import SafariServices
 
 class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate {
     
@@ -211,8 +212,6 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
         return 20
     }
     
-    
-    
     func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         let message = messages[indexPath.item]
         
@@ -329,7 +328,6 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
                                 }
                                 
                                 self.pdfMessageRef[counter] = chatSnapshot.key
-                                self.view.addSubview(mediaItem.mediaPlaceholderView())
                             }
                         }
                         self.finishReceivingMessage()
@@ -444,16 +442,7 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
 
     //Function to request alert picker view
     override func didPressAccessoryButton(_ sender: UIButton) {
-//        let picker = UIImagePickerController()
-//        picker.delegate = self as UIImagePickerControllerDelegate & UINavigationControllerDelegate
-//        if (UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)) {
-//            picker.sourceType = UIImagePickerControllerSourceType.camera
-//        } else {
-//            picker.sourceType = UIImagePickerControllerSourceType.photoLibrary
-//        }
-//
-//        present(picker, animated: true, completion:nil)
-        
+
         let picker = UIImagePickerController()
         picker.delegate = self
         
@@ -498,12 +487,12 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
         
         let storageRef = FIRStorage.storage().reference(withPath: pdfURL)//reference(forURL: pdfURL)
         
-        let localURL = getDocumentsDirectory()
+        let localURL = URL(string: "\(getDocumentsDirectory().absoluteString)/\(Int64(NSDate().timeIntervalSince1970 * 1000).description)")!
         
         
         
-        let downloadTask = storageRef.write(toFile: localURL) { url, error in
-            if let error = error {
+        storageRef.write(toFile: localURL) { url, error in
+            if error != nil{
                 NSLog("Error downloading file")
                 return
             }
@@ -522,31 +511,18 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
         if pdfURL == "NOTSET" {
             return
         }
-        
-        if #available(iOS 10.0, *) {
-            UIApplication.shared.open(URL(string: pdfURL)!, options: [:], completionHandler: nil)
-        } else {
-            // Fallback on earlier versions
-        }
-        
-        let storageRef = FIRStorage.storage().reference(withPath: pdfURL)//reference(forURL: pdfURL)
-        
-        let localURL = getDocumentsDirectory()
-        
-        
-        
+        let storageRef = FIRStorage.storage().reference(forURL: pdfURL)//reference(forURL: pdfURL)
+        let localURL = URL(string: "\(getDocumentsDirectory().absoluteString)\(Int64(NSDate().timeIntervalSince1970 * 1000).description)")!
         storageRef.write(toFile: localURL) { url, error in
             if let error = error {
                 NSLog("Error downloading file: \(error.localizedDescription)")
                 return
             }
             
-            if let url = url {
-                if #available(iOS 10.0, *) {
-                    UIApplication.shared.open(url, options: [:], completionHandler: nil)
-                } else {
-                    // Fallback on earlier versions
-                }
+            if #available(iOS 10.0, *) {
+                UIApplication.shared.open(URL(string: pdfURL)!, options: [:], completionHandler: nil)
+            } else {
+                // Fallback on earlier versions
             }
         }
     }
@@ -616,7 +592,8 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
     }
 
     private func addPDFMessage(withId id: String, key: String, mediaItem: JSQLocationMediaItem) {
-        if let message = JSQMessage(senderId: id, displayName: "", media: mediaItem) {
+        let image = JSQPhotoMediaItem(image: #imageLiteral(resourceName: "attachment"))
+        if let message = JSQMessage(senderId: id, displayName: "", media: image) {
             messages.append(message)
             
             if (mediaItem.mediaView() == nil) {
@@ -637,17 +614,15 @@ class ChatViewController: JSQMessagesViewController, UIGestureRecognizerDelegate
             }
         })
     }
-    
 }
 
 // MARK: Image Picker Delegate
 extension ChatViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    
 
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         picker.dismiss(animated: true, completion:nil)
         self.tabBarController?.tabBar.alpha = 0
-        
+
         // 1
         if let photoReferenceUrl = info[UIImagePickerControllerReferenceURL] as? URL {
             // Handle picking a Photo from the Photo Library
@@ -713,6 +688,7 @@ extension ChatViewController: UIDocumentMenuDelegate, UIDocumentPickerDelegate {
         // Create a reference to the file you want to upload
         uploadDocument(with: url)
         controller.dismiss(animated: true, completion: nil)
+        self.tabBarController?.tabBar.alpha = 0
     }
     
     func setDocumentFirebaseURL(_ url: String, forFireBaseURL key: String) {
